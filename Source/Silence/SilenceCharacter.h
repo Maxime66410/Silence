@@ -4,12 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "Logging/LogMacros.h"
 #include "SilenceCharacter.generated.h"
 
 class UInputComponent;
 class USkeletalMeshComponent;
 class UCameraComponent;
+class USpringArmComponent;
 class UInputAction;
 class UInputMappingContext;
 struct FInputActionValue;
@@ -22,20 +24,50 @@ class ASilenceCharacter : public ACharacter
 	GENERATED_BODY()
 
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Mesh, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Mesh, meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* Mesh1P;
 
 	/** First person camera */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FirstPersonCameraComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Value, meta=(AllowPrivateAccess = "true"))
+	USpringArmComponent* SpringArm;
+
 	/** Jump Input Action */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Input, meta=(AllowPrivateAccess = "true"))
 	UInputAction* JumpAction;
 
 	/** Move Input Action */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Input, meta=(AllowPrivateAccess = "true"))
 	UInputAction* MoveAction;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UInputAction* UseAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UInputAction* SprintAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UInputAction* WalkAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UInputAction* CancelAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Value, meta=(AllowPrivateAccess = "true"))
+	bool bCanMove = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Value, meta=(AllowPrivateAccess = "true"))
+	bool bCanLook = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Value, meta=(AllowPrivateAccess = "true"))
+	float MouseX = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Value, meta=(AllowPrivateAccess = "true"))
+	float MouseY = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Value, meta=(AllowPrivateAccess = "true"))
+	float MovementLeftRight = 0.0f;
 	
 public:
 	ASilenceCharacter();
