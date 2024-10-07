@@ -23,10 +23,6 @@ class ASilenceCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-	/** Pawn mesh: 1st person view (arms; seen only by self) */
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Mesh, meta = (AllowPrivateAccess = "true"))
-	USkeletalMeshComponent* Mesh1P;
-
 	/** First person camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FirstPersonCameraComponent;
@@ -59,6 +55,9 @@ class ASilenceCharacter : public ACharacter
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Value, meta=(AllowPrivateAccess = "true"))
 	bool bCanLook = true;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Value, meta=(AllowPrivateAccess = "true"))
+	bool bCanJump = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Value, meta=(AllowPrivateAccess = "true"))
 	float MouseX = 0.0f;
@@ -68,6 +67,12 @@ class ASilenceCharacter : public ACharacter
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Value, meta=(AllowPrivateAccess = "true"))
 	float MovementLeftRight = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Value, meta=(AllowPrivateAccess = "true"))
+	float MovementForwardBackward = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Value, meta=(AllowPrivateAccess = "true"))
+	bool bIsUsingLightActor = true;
 	
 public:
 	ASilenceCharacter();
@@ -88,14 +93,15 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
+	void CustomJump(const FInputActionValue& Value);
+
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 	// End of APawn interface
 
 public:
-	/** Returns Mesh1P subobject **/
-	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
