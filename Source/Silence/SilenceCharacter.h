@@ -95,6 +95,7 @@ protected:
 
 	void CustomJump(const FInputActionValue& Value);
 
+	void Sprint(const FInputActionValue& Value);
 
 protected:
 	// APawn interface

@@ -10,6 +10,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "Engine/LocalPlayer.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -56,6 +57,10 @@ void ASilenceCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ASilenceCharacter::Look);
+
+		// Sprinting
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started, this, &ASilenceCharacter::Sprint);
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &ASilenceCharacter::Sprint);
 	}
 	else
 	{
@@ -99,5 +104,14 @@ void ASilenceCharacter::CustomJump(const FInputActionValue& Value)
 	if(bCanJump)
 	{
 		Jump();
+	}
+}
+
+// ReSharper disable once CppMemberFunctionMayBeConst
+void ASilenceCharacter::Sprint(const FInputActionValue& Value)
+{
+	if(GetCharacterMovement())
+	{
+		GetCharacterMovement()->MaxWalkSpeed = Value.Get<bool>() ? 450 : 200;
 	}
 }
