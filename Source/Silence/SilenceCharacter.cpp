@@ -94,8 +94,8 @@ void ASilenceCharacter::Look(const FInputActionValue& Value)
 		MouseX = LookAxisVector.X;
 		MouseY = LookAxisVector.Y;
 		// add yaw and pitch input to controller
-		AddControllerYawInput(LookAxisVector.X);
-		AddControllerPitchInput(LookAxisVector.Y);
+		AddControllerYawInput(LookAxisVector.X * SensibilityMouse.X);
+		AddControllerPitchInput(LookAxisVector.Y * SensibilityMouse.Y);
 	}
 }
 

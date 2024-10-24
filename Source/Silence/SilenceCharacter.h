@@ -76,6 +76,9 @@ class ASilenceCharacter : public ACharacter
 	
 public:
 	ASilenceCharacter();
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Value, meta=(AllowPrivateAccess = "true"))
+	FVector2D SensibilityMouse = FVector2D(1.0f, 1.0f);
 
 protected:
 	virtual void BeginPlay();
